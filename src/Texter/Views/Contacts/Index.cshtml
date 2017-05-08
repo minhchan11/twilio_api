@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Texter.Models.Contact>
+
+<h2>Texter</h2>
+<h4>@Html.DisplayNameFor(model => model.Name)</h4>
+<ul>
+    @foreach(var listContact in Model)
+    {
+        <li>@Html.DisplayFor(modelContact => listContact.Name)
+    @Html.DisplayFor(modelContact => listContact.Number)
+    </li>
+
+    }
+</ul>
