@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Texter.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +12,7 @@ namespace Texter.Controllers
 {
     public class HomeController : Controller
     {
+        private TexterContext db = new TexterContext();
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -25,6 +27,7 @@ namespace Texter.Controllers
 
         public IActionResult SendMessage()
         {
+            ViewBag.To = new SelectList(db.Contacts, "Number", "Name");
             return View();
         }
 
