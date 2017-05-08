@@ -14,5 +14,18 @@ namespace Texter.Controllers
         {
             return View(db.Contacts.ToList());
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Contact contact)
+        {
+            db.Contacts.Add(contact);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
