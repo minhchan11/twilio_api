@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Texter.Models.Message
+
+<h2>Send a new message</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.To)
+    @Html.TextBoxFor(model => model.To)
+
+    @Html.LabelFor(model => model.From)
+    @Html.TextBoxFor(model => model.From)
+
+    @Html.LabelFor(model => model.Body)
+    @Html.TextBoxFor(model => model.Body)
+
+    <input type="submit" value="Send!" />
+}
+
+@Html.ActionLink("Back home", "Index")
