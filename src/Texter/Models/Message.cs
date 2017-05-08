@@ -20,9 +20,9 @@ namespace Texter.Models
         {
             var client = new RestClient("https://api.twilio.com/2010-04-01");
 
-            var request = new RestRequest("Accounts/{{Account SID}}/Messages.json", Method.GET);
+            var request = new RestRequest("Accounts/ACda7fae80dbacc70808a453daf19951db/Messages.json", Method.GET);
 
-            client.Authenticator = new HttpBasicAuthenticator("{{Account SID}}", "{{Auth Token}}");
+            client.Authenticator = new HttpBasicAuthenticator("ACda7fae80dbacc70808a453daf19951db", "c50527004eebf9ff58cb3749f51d540f");
 
             var response = new RestResponse();
 
@@ -36,6 +36,31 @@ namespace Texter.Models
             var messageList = JsonConvert.DeserializeObject<List<Message>>(jsonResponse["messages"].ToString());
 
             return messageList;
+        }
+
+        public void Send()
+        {
+            var client = new RestClient("https://api.twilio.com/2010-04-01");
+            var request = new RestRequest("Accounts/ACda7fae80dbacc70808a453daf19951db/Messages", Method.POST);
+            request.AddParameter("To", To);
+            request.AddParameter("From", From);
+            request.AddParameter("Body", Body);
+            client.Authenticator = new HttpBasicAuthenticator("ACda7fae80dbacc70808a453daf19951db", "c50527004eebf9ff58cb3749f51d540f");
+            client.ExecuteAsync(request, response =>
+            {
+                Console.WriteLine(response.Content);
+            });
+        }
+
+        public static Task<IRestResponse> GetResponseContentAsync(RestClient theClient, RestRequest theRequest)
+        {
+            var tcs = new TaskCompletionSource<IRestResponse>();
+
+            theClient.ExecuteAsync(theRequest, response =>
+            {
+                tcs.SetResult(response);
+            });
+            return tcs.Task;
         }
     }
 }
